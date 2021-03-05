@@ -16,7 +16,7 @@ from optparse import OptionParser, OptionGroup
 import itertools
 
 
-class PolicyGen:    
+class PolicyGen:
     def __init__(self):
         self.output_file = None
 
@@ -47,7 +47,7 @@ class PolicyGen:
             else: print "[!] Error, unknown mask ?%s in a mask %s" % (char,mask)
 
         return count
-   
+
     def generate_masks(self, noncompliant):
         """ Generate all possible password masks matching the policy """
 
@@ -78,8 +78,7 @@ class PolicyGen:
                 digitcount = 0
                 specialcount = 0
 
-                mask_complexity = self.getcomplexity(mask)      
-                
+                mask_complexity = self.getcomplexity(mask)
                 total_length_count += 1
                 total_length_complexity += mask_complexity
 
@@ -89,7 +88,7 @@ class PolicyGen:
                     elif char == "u": uppercount += 1
                     elif char == "d": digitcount += 1
                     elif char == "s": specialcount += 1
-                        
+
                 # Filter according to password policy
                 # NOTE: Perform exact opposite (XOR) operation if noncompliant
                 #       flag was set when calling the function.
@@ -106,7 +105,7 @@ class PolicyGen:
                     sample_length_complexity += mask_complexity
 
                     if self.showmasks:
-                        mask_time = mask_complexity/self.pps      
+                        mask_time = mask_complexity/self.pps
                         time_human = ">1 year" if mask_time > 60*60*24*365 else str(datetime.timedelta(seconds=mask_time))
                         print "[{:>2}] {:<30} [l:{:>2} u:{:>2} d:{:>2} s:{:>2}] [{:>8}]  ".format(length, mask, lowercount,uppercount,digitcount,specialcount, time_human)
 
