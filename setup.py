@@ -17,11 +17,11 @@ f.close()
 
 
 setup(
-    name='pack',
+    name='pack_ama',
     version=VERSION,
-    description='PACK (Password Analysis and Cracking Kit)',
+    description='Password Analysis and Cracking Kit',
     long_description=LONG_DESCRIPTION,
-    #long_description_content_type='text/markdown',
+    long_description_content_type='text/markdown',
     maintainer='glozanoa',
     maintainer_email='glozanoa@uni.pe',
     url='https://github.com/fpolit/pack',

@@ -15,7 +15,6 @@ import datetime
 from optparse import OptionParser, OptionGroup
 import itertools
 
-VERSION = "0.0.2"
 
 class PolicyGen:    
     def __init__(self):
@@ -128,79 +127,3 @@ class PolicyGen:
         sample_time = sample_complexity/self.pps
         sample_time_human = ">1 year" if sample_time > 60*60*24*365 else str(datetime.timedelta(seconds=sample_time))
         print "[*] Policy Masks: %d Time: %s" % (sample_count, sample_time_human)
-
-
-if __name__ == "__main__":
-
-    header  = "                       _ \n"
-    header += "     PolicyGen %s  | |\n"  % VERSION
-    header += "      _ __   __ _  ___| | _\n"
-    header += "     | '_ \ / _` |/ __| |/ /\n"
-    header += "     | |_) | (_| | (__|   < \n"
-    header += "     | .__/ \__,_|\___|_|\_\\\n"
-    header += "     | |                    \n"
-    header += "     |_| iphelix@thesprawl.org\n"
-    header += "\n"
-
-    # parse command line arguments
-    parser = OptionParser("%prog [options]\n\nType --help for more options", version="%prog "+VERSION)
-    parser.add_option("-o", "--outputmasks", dest="output_masks",help="Save masks to a file", metavar="masks.hcmask")
-    parser.add_option("--pps", dest="pps", help="Passwords per Second", type="int", metavar="1000000000")
-    parser.add_option("--showmasks", dest="showmasks", help="Show matching masks", action="store_true", default=False)
-    parser.add_option("--noncompliant", dest="noncompliant", help="Generate masks for noncompliant passwords", action="store_true", default=False)
-
-    group = OptionGroup(parser, "Password Policy", "Define the minimum (or maximum) password strength policy that you would like to test")
-    group.add_option("--minlength", dest="minlength", type="int", metavar="8", default=8, help="Minimum password length")
-    group.add_option("--maxlength", dest="maxlength", type="int", metavar="8", default=8, help="Maximum password length")
-    group.add_option("--mindigit",  dest="mindigit",  type="int", metavar="1", help="Minimum number of digits")
-    group.add_option("--minlower",  dest="minlower",  type="int", metavar="1", help="Minimum number of lower-case characters")
-    group.add_option("--minupper",  dest="minupper",  type="int", metavar="1", help="Minimum number of upper-case characters")
-    group.add_option("--minspecial",dest="minspecial",type="int", metavar="1", help="Minimum number of special characters")
-    group.add_option("--maxdigit",  dest="maxdigit",  type="int", metavar="3", help="Maximum number of digits")
-    group.add_option("--maxlower",  dest="maxlower",  type="int", metavar="3", help="Maximum number of lower-case characters")
-    group.add_option("--maxupper",  dest="maxupper",  type="int", metavar="3", help="Maximum number of upper-case characters")
-    group.add_option("--maxspecial",dest="maxspecial",type="int", metavar="3", help="Maximum number of special characters")
-    parser.add_option_group(group)
-
-    parser.add_option("-q", "--quiet", action="store_true", dest="quiet", default=False, help="Don't show headers.")
-
-    (options, args) = parser.parse_args()
-
-    # Print program header
-    if not options.quiet:
-        print header
-
-    policygen = PolicyGen()
-
-    # Settings    
-    if options.output_masks:
-        print "[*] Saving generated masks to [%s]" % options.output_masks
-        policygen.output_file = open(options.output_masks, 'w')
-
-
-    # Password policy
-    if options.minlength  != None: policygen.minlength  = options.minlength
-    if options.maxlength  != None: policygen.maxlength  = options.maxlength
-    if options.mindigit   != None: policygen.mindigit   = options.mindigit
-    if options.minlower   != None: policygen.minlower   = options.minlower
-    if options.minupper   != None: policygen.minupper   = options.minupper
-    if options.minspecial != None: policygen.minspecial = options.minspecial
-    if options.maxdigit   != None: policygen.maxdigit   = options.maxdigit
-    if options.maxlower   != None: policygen.maxlower   = options.maxlower
-    if options.maxupper   != None: policygen.maxupper   = options.maxupper
-    if options.maxspecial != None: policygen.maxspecial = options.maxspecial
-
-    # Misc
-    if options.pps: policygen.pps = options.pps
-    if options.showmasks: policygen.showmasks = options.showmasks
-
-    print "[*] Using {:,d} keys/sec for calculations.".format(policygen.pps)
-
-    # Print current password policy
-    print "[*] Password policy:"
-    print "    Pass Lengths: min:%d max:%d" % (policygen.minlength, policygen.maxlength)
-    print "    Min strength: l:%s u:%s d:%s s:%s" % (policygen.minlower, policygen.minupper, policygen.mindigit, policygen.minspecial)
-    print "    Max strength: l:%s u:%s d:%s s:%s" % (policygen.maxlower, policygen.maxupper, policygen.maxdigit, policygen.maxspecial)
-
-    print "[*] Generating [%s] masks." % ("compliant" if not options.noncompliant else "non-compliant")
-    policygen.generate_masks(options.noncompliant)

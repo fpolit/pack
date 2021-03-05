@@ -16,8 +16,6 @@ import datetime
 from operator import itemgetter
 from optparse import OptionParser, OptionGroup
 
-VERSION = "0.0.3"
-
 class MaskGen:
     def __init__(self):
         # Masks collections with meta data

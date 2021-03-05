@@ -1,2 +1,7 @@
 **/*~
 **/.*
+**/__pycache__
+pack_ama.egg-info/*
+pack.egg-info/*
+build/*
+dist/*

@@ -31,4 +31,4 @@ dist: clean
 	python setup.py bdist_wheel
 
 dist-upload:
-	twine upload dist/*
+	twine upload dist/* --verbose
