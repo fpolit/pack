@@ -33,7 +33,6 @@ def maskgen(*,
 
 
         print(f"[*] Analyzing masks in {statsgen_output}")
-        pps = 1000000000
         maskgen = MaskGen(
             target_time = target_time,
             output_file = output,
@@ -45,7 +44,6 @@ def maskgen(*,
             maxcomplexity = max_complexity,
             minoccurrence = min_occurrence,
             maxoccurrence = max_occurrence,
-            pps = pps,
             showmasks = show_masks)
 
         # Settings

@@ -15,6 +15,8 @@ import csv
 import datetime
 from operator import itemgetter
 from optparse import OptionParser, OptionGroup
+from math import floor
+
 
 class MaskGen:
     def __init__(self, *,
@@ -28,7 +30,6 @@ class MaskGen:
                  maxcomplexity:int = None,
                  minoccurrence:int = None,
                  maxoccurrence:int = None,
-                 pps:int  = 1000000000,
                  showmasks:bool = False):
 
         # Masks collections with meta data
@@ -52,7 +53,7 @@ class MaskGen:
         self.customcharset4len = None
 
         # PPS (Passwords per Second) Cracking Speed
-        self.pps = pps
+        self.pps = 1000000000
         self.showmasks = showmasks
 
         # Counter for total masks coverage
@@ -90,7 +91,7 @@ class MaskGen:
             if mask == "": continue
 
             mask_occurrence = int(occurrence)
-            mask_length = len(mask)/2
+            mask_length = floor(len(mask)/2)
             mask_complexity = self.getcomplexity(mask)
             mask_time = mask_complexity/self.pps
 
