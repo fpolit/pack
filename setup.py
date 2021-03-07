@@ -7,9 +7,10 @@
 
 
 from setuptools import setup, find_packages
+from pack_ama import pack_version
 #from ama.core.version import get_version
 
-VERSION = "v0.0.1" 
+VERSION = pack_version()
 
 f = open('README', 'r')
 LONG_DESCRIPTION = f.read()
