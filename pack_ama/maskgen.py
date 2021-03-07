@@ -52,7 +52,7 @@ class MaskGen:
         self.customcharset4len = None
 
         # PPS (Passwords per Second) Cracking Speed
-        self.pps = ps
+        self.pps = pps
         self.showmasks = showmasks
 
         # Counter for total masks coverage
@@ -78,8 +78,11 @@ class MaskGen:
 
         return count
 
+    #debugged - date: Mar 7 2021
     def loadmasks(self, filename):
         """ Load masks and apply filters. """
+        #import pdb; pdb.set_trace()
+
         maskReader = csv.reader(open(filename,'r'), delimiter=',', quotechar='"')
 
         for (mask,occurrence) in maskReader:
@@ -110,8 +113,11 @@ class MaskGen:
                 self.masks[mask]['time'] = mask_time
                 self.masks[mask]['optindex'] = 1 - mask_complexity/mask_occurrence
 
+    #debugged - date: Mar 7 2021
     def generate_masks(self,sorting_mode):
         """ Generate optimal password masks sorted by occurrence, complexity or optindex """
+
+        #import pdb; pdb.set_trace()
 
         output = None
         try:
