@@ -5,3 +5,5 @@ pack_ama.egg-info/*
 pack.egg-info/*
 build/*
 dist/*
+wl/*
+pack_ama/test/wl/*

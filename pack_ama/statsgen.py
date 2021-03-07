@@ -9,6 +9,10 @@
 # All rights reserved.
 #
 # Please see the attached LICENSE file for additional licensing information.
+#
+#
+# Maintainer: glozanoa <glozanoa@uni.pe>
+
 
 import sys
 import re, operator, string
@@ -21,7 +25,7 @@ class StatsGen:
     def __init__(self, *, wordlist: str = None, output: str = None,
                  minlength: int = None, maxlength: int = None,
                  simplemasks: List[str] = None, charsets: List[str] = None,
-                 quiet: bool = False, hiderare: bool = False):
+                 quiet: bool = False, hiderare: int = 0):
         self.output_file = output
         self.wordlist_file = wordlist
         # Filters
@@ -76,13 +80,13 @@ class StatsGen:
                 advancedmask_string += "?d"
                 if not simplemask or not simplemask[-1] == 'digit': simplemask.append('digit')
 
-            elif letter in string.lowercase:
+            elif letter in string.ascii_lowercase:
                 lower += 1
                 advancedmask_string += "?l"
                 if not simplemask or not simplemask[-1] == 'string': simplemask.append('string')
 
 
-            elif letter in string.uppercase:
+            elif letter in string.ascii_uppercase:
                 upper += 1
                 advancedmask_string += "?u"
                 if not simplemask or not simplemask[-1] == 'string': simplemask.append('string')
@@ -174,36 +178,52 @@ class StatsGen:
                     else:
                         self.stats_advancedmasks[advancedmask] = 1
 
+                        
+    # debugged - date: Mar 7 2021
     def print_stats(self):
         """ Print password statistics. """
+        #import pdb; pdb.set_trace()
 
-        print("[+] Analyzing %d%% (%d/%d) of passwords" % (self.filter_counter*100/self.total_counter, self.filter_counter, self.total_counter))
-        print("    NOTE: Statistics below is relative to the number of analyzed passwords, not total number of passwords")
-        print("\n[*] Length:")
-        for (length,count) in sorted(self.stats_length.iteritems(), key=operator.itemgetter(1), reverse=True):
-            if self.hiderare and not count*100/self.filter_counter > 0: continue
-            print("[+] %25d: %02d%% (%d)" % (length, count*100/self.filter_counter, count))
+        output = None
+        try:
+            print("[+] Analyzing %d%% (%d/%d) of passwords" % (self.filter_counter*100/self.total_counter, self.filter_counter, self.total_counter))
+            print("    NOTE: Statistics below is relative to the number of analyzed passwords, not total number of passwords")
+            print("\n[*] Length:")
+            for (length,count) in sorted(self.stats_length.items(), key=operator.itemgetter(1), reverse=True):
+                if not count*100/self.filter_counter > self.hiderare: continue
+                print("[+] %25d: %02d%% (%d)" % (length, count*100/self.filter_counter, count))
 
-        print("\n[*] Character-set:")
-        for (char,count) in sorted(self.stats_charactersets.iteritems(), key=operator.itemgetter(1), reverse=True):
-            if self.hiderare and not count*100/self.filter_counter > 0: continue
-            print("[+] %25s: %02d%% (%d)" % (char, count*100/self.filter_counter, count))
+            print("\n[*] Character-set:")
+            for (char,count) in sorted(self.stats_charactersets.items(), key=operator.itemgetter(1), reverse=True):
+                if not count*100/self.filter_counter > self.hiderare: continue
+                print("[+] %25s: %02d%% (%d)" % (char, count*100/self.filter_counter, count))
 
-        print("\n[*] Password complexity:")
-        print("[+]                     digit: min(%s) max(%s)" % (self.mindigit, self.maxdigit))
-        print("[+]                     lower: min(%s) max(%s)" % (self.minlower, self.maxlower))
-        print("[+]                     upper: min(%s) max(%s)" % (self.minupper, self.maxupper))
-        print("[+]                   special: min(%s) max(%s)" % (self.minspecial, self.maxspecial))
+            print("\n[*] Password complexity:")
+            print("[+]                     digit: min(%s) max(%s)" % (self.mindigit, self.maxdigit))
+            print("[+]                     lower: min(%s) max(%s)" % (self.minlower, self.maxlower))
+            print("[+]                     upper: min(%s) max(%s)" % (self.minupper, self.maxupper))
+            print("[+]                   special: min(%s) max(%s)" % (self.minspecial, self.maxspecial))
 
-        print("\n[*] Simple Masks:")
-        for (simplemask,count) in sorted(self.stats_simplemasks.iteritems(), key=operator.itemgetter(1), reverse=True):
-            if self.hiderare and not count*100/self.filter_counter > 0: continue
-            print("[+] %25s: %02d%% (%d)" % (simplemask, count*100/self.filter_counter, count))
+            print("\n[*] Simple Masks:")
+            for (simplemask,count) in sorted(self.stats_simplemasks.items(), key=operator.itemgetter(1), reverse=True):
+                if not count*100/self.filter_counter > self.hiderare: continue
+                print("[+] %25s: %02d%% (%d)" % (simplemask, count*100/self.filter_counter, count))
 
-        print("\n[*] Advanced Masks:")
-        for (advancedmask,count) in sorted(self.stats_advancedmasks.iteritems(), key=operator.itemgetter(1), reverse=True):
-            if count*100/self.filter_counter > 0:
-                print("[+] %25s: %02d%% (%d)" % (advancedmask, count*100/self.filter_counter, count))
+            print("\n[*] Advanced Masks:")
 
             if self.output_file:
-                self.output_file.write("%s,%d\n" % (advancedmask,count))
+                output = open(self.output_file, 'w')
+
+            for (advancedmask,count) in sorted(self.stats_advancedmasks.items(), key=operator.itemgetter(1), reverse=True):
+                if count*100/self.filter_counter > self.hiderare:
+                    print("[+] %25s: %02d%% (%d)" % (advancedmask, count*100/self.filter_counter, count))
+
+                    if output:
+                        output.write("%s,%d\n" % (advancedmask,count))
+
+        except Exception as error:
+            print(error)
+
+        finally:
+            if output is not None:
+                output.close()
