@@ -178,7 +178,18 @@ class StatsGen:
                     else:
                         self.stats_advancedmasks[advancedmask] = 1
 
-                        
+
+    # def generated_masks(self):
+    #     mask_occurrence = [] [(mask, occurrence), ...]
+    #     for (advancedmask,count) in sorted(self.stats_advancedmasks.items(), key=operator.itemgetter(1), reverse=True):
+    #             if count*100/self.filter_counter > self.hiderare:
+    #                 print("[+] %25s: %02d%% (%d)" % (advancedmask, count*100/self.filter_counter, count))
+
+    #                 if output:
+    #                 mask_occurrence.append((advancedmask,count))
+
+    #     return mask_occurrence
+
     # debugged - date: Mar 7 2021
     def print_stats(self):
         """ Print password statistics. """

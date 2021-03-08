@@ -42,10 +42,10 @@ class PolicyGen:
         self.min_charsets = sum([self.mindigit, self.minlower, self.minupper, self.minspecial])
         max_char = self.maxlength - self.min_charsets
 
-        self.maxdigit   = max_digit   or max_char + self.mindigit   if self.mindigit   > 0 else 0
-        self.maxlower   = max_lower   or max_char + self.minlower   if self.minlower   > 0 else 0
-        self.maxupper   = max_upper   or max_char + self.minupper   if self.minupper   > 0 else 0
-        self.maxspecial = max_special or max_char + self.minspecial if self.minspecial > 0 else 0
+        self.maxdigit   = max_digit   or max_char + self.mindigit   if self.mindigit   > 0 else self.maxlength
+        self.maxlower   = max_lower   or max_char + self.minlower   if self.minlower   > 0 else self.maxlength
+        self.maxupper   = max_upper   or max_char + self.minupper   if self.minupper   > 0 else self.maxlength
+        self.maxspecial = max_special or max_char + self.minspecial if self.minspecial > 0 else self.maxlength
 
         # PPS (Passwords per Second) Cracking Speed
         self.pps = 1000000000
@@ -64,10 +64,11 @@ class PolicyGen:
 
         return count
 
+    #debugged - date: Mar 7 2020
     def generate_masks(self):
         """ Generate all possible password masks matching the policy """
 
-        import pdb; pdb.set_trace()
+        #import pdb; pdb.set_trace()
 
         print("[*] Using {:,d} keys/sec for calculations.".format(self.pps))
 
@@ -95,7 +96,7 @@ class PolicyGen:
 
             # TODO: Randomize or even statistically arrange matching masks
             for length in range(self.minlength, self.maxlength+1):
-                print("[*] Generating %d character password masks." % length)
+                #print("\n[*] Generating %d character password masks." % length)
                 total_length_count = 0
                 sample_length_count = 0
 
