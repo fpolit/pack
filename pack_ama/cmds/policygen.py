@@ -46,12 +46,12 @@ def policygen_parser():
 
 #debugged - date: Mar 7 2021
 @staticmethod
-def policygen( *,
-               output: str = None,
-               min_length:int = None, max_length:int = None, min_digit:int = None, max_digit: int = None,
-               min_upper:int = None, max_upper:int = None, min_lower:int = None, max_lower:int = None,
-               min_special:int = None, max_special:int = None,
-               show_masks:bool = False, quiet:bool = True):
+def policygen(*,
+              output: str = None,
+              min_length:int = None, max_length:int = None, min_digit:int = None, max_digit: int = None,
+              min_upper:int = None, max_upper:int = None, min_lower:int = None, max_lower:int = None,
+              min_special:int = None, max_special:int = None,
+              show_masks:bool = False, quiet:bool = True):
 
     #import pdb; pdb.set_trace()
     #Print program header
@@ -73,7 +73,7 @@ def policygen( *,
 
     if not quiet:
         print("[*] Generating masks.")
-    policygen.generate_masks()
+        policygen.generate_masks()
     if output and not quiet:
         print("[*] Saving generated masks to [%s]" % output)
 

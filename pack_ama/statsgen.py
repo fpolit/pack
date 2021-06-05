@@ -11,6 +11,8 @@
 # Please see the attached LICENSE file for additional licensing information.
 #
 #
+# Status: DEBUGGED - date Jun 5 2021
+#
 # Maintainer: glozanoa <glozanoa@uni.pe>
 
 
