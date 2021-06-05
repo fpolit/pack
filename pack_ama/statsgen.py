@@ -21,7 +21,20 @@ import time
 
 from typing import List
 
+from .version import pack_version
+
 class StatsGen:
+    VERSION = pack_version()
+    banner  = "                       _ \n"
+    banner += "     StatsGen %s   | |\n"  % VERSION
+    banner += "      _ __   __ _  ___| | _\n"
+    banner += "     | '_ \ / _` |/ __| |/ /\n"
+    banner += "     | |_) | (_| | (__|   < \n"
+    banner += "     | .__/ \__,_|\___|_|\_\\\n"
+    banner += "     | |                    \n"
+    banner += "     |_| iphelix@thesprawl.org\n"
+    banner += "\n"
+
     def __init__(self, *, wordlist: str = None, output: str = None,
                  minlength: int = None, maxlength: int = None,
                  simplemasks: List[str] = None, charsets: List[str] = None,

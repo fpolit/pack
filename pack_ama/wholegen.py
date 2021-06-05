@@ -7,27 +7,31 @@
 # Maintainer: glozanoa <glozanoa@uni.pe>
 
 from typing import List
-
-# statsgen
 import sys
 import re, operator, string
-#from optparse import OptionParser, OptionGroup
 import time
-
-## maskgem
-#import sys
-#import csv
 import datetime
 from operator import itemgetter
-#from optparse import OptionParser, OptionGroup
 from math import floor
 
 
+from .version import pack_version
 
 class WholeGen:
     """
     Perform a full analysis (statsgen and maskgen) to a wordlist and generate masks
     """
+
+    VERSION = pack_version()
+    banner  = "                       _ \n"
+    banner += "     WholeGen  %s  | |\n"  % VERSION
+    banner += "      _ __   __ _  ___| | _\n"
+    banner += "     | '_ \ / _` |/ __| |/ /\n"
+    banner += "     | |_) | (_| | (__|   < \n"
+    banner += "     | .__/ \__,_|\___|_|\_\\\n"
+    banner += "     | |                    \n"
+    banner += "     |_| iphelix@thesprawl.org\n"
+    banner += "\n"
 
     def __init__(self, *,
                  #files
@@ -373,12 +377,3 @@ class WholeGen:
     def full_analysis(self):
         self.generate_stats()
         self.generate_masks()
-
-
-if __name__=="__main__":
-    wordlist = "wl/john.txt"
-    output = "john.hcmasks"
-    whole = WholeGen(wordlist=wordlist,
-                     output=output)
-
-    whole.full_analysis()

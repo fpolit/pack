@@ -15,8 +15,20 @@ import datetime
 from optparse import OptionParser, OptionGroup
 import itertools
 
+from .version import pack_version
 
 class PolicyGen:
+    VERSION = pack_version()
+    banner  = "                       _ \n"
+    banner += "     PolicyGen %s  | |\n"  % VERSION
+    banner += "      _ __   __ _  ___| | _\n"
+    banner += "     | '_ \ / _` |/ __| |/ /\n"
+    banner += "     | |_) | (_| | (__|   < \n"
+    banner += "     | .__/ \__,_|\___|_|\_\\\n"
+    banner += "     | |                    \n"
+    banner += "     |_| iphelix@thesprawl.org\n"
+    banner += "\n"
+
     def __init__(self, *,
                  output: str = None,
                  min_length:int = 8,

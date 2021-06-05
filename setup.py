@@ -28,7 +28,7 @@ setup(
     license='GPL3',
     packages=find_packages(),
     include_package_data=True,
-
+    install_requires=['fineprint'],
     entry_points={
         'console_scripts':[
             'statsgen = pack_ama.cmds.statsgen:main',

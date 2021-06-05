@@ -17,8 +17,21 @@ from operator import itemgetter
 from optparse import OptionParser, OptionGroup
 from math import floor
 
+from .version import pack_version
 
 class MaskGen:
+
+    VERSION = pack_version()
+    banner  = "                       _ \n"
+    banner += "     MaskGen %s    | |\n" % VERSION
+    banner += "      _ __   __ _  ___| | _\n"
+    banner += "     | '_ \ / _` |/ __| |/ /\n"
+    banner += "     | |_) | (_| | (__|   < \n"
+    banner += "     | .__/ \__,_|\___|_|\_\\\n"
+    banner += "     | |                    \n"
+    banner += "     |_| iphelix@thesprawl.org\n"
+    banner += "\n"
+
     def __init__(self, *,
                  target_time:int = None,
                  output_file:str = None,
