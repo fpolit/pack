@@ -88,10 +88,10 @@ class WholeGen:
 
     def full_analysis(self, sorting_mode):
 
-        # StatsGen
         if not self.quiet:
             print(WholeGen.banner)
 
+        # StatsGen
         print(f"[*] Analyzing passwords in {self.wordlist}")
 
         self.statsgen.generate_stats()
