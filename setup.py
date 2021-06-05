@@ -9,7 +9,8 @@
 from setuptools import setup, find_packages
 from pack_ama import pack_version
 
-VERSION = pack_version()
+#VERSION = pack_version()
+VERSION="1.0.8"
 
 f = open('README', 'r')
 LONG_DESCRIPTION = f.read()
