@@ -8,10 +8,8 @@
 
 from setuptools import setup, find_packages
 from pack_ama import pack_version
-#from ama.core.version import get_version
 
-#VERSION = pack_version()
-VERSION = "1.0.6"
+VERSION = pack_version()
 
 f = open('README', 'r')
 LONG_DESCRIPTION = f.read()
@@ -30,4 +28,12 @@ setup(
     license='GPL3',
     packages=find_packages(),
     include_package_data=True,
+
+    entry_points={
+        'console_scripts':[
+            'statsgen = pack_ama.cmds.statsgen:main',
+            'maskgen = pack_ama.cmds.maskgen:main',
+            'policygen = pack_ama.cmds.policygen:main'
+        ]
+    }
 )
