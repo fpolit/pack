@@ -4,26 +4,27 @@ clean:
 	find . -name '*.py[co]' -delete
 
 virtualenv:
-	virtualenv --prompt '(pack)' env
-	env/bin/pip3 install -r requirements-dev.txt
-	env/bin/python3 setup.py develop
+	virtualenv --prompt '(ama)' env
+	env/bin/pip3 install -r requirements.txt
 	@echo
 	@echo "VirtualENV Setup Complete. Now run: source env/bin/activate"
 	@echo
 
-pkg:
+virtualenv_dev:
+	virtualenv --prompt '(ama)' env
+	env/bin/pip3 install -r requirements-dev.txt
+	@echo
+	@echo "VirtualENV Setup Complete. Now run: source env/bin/activate"
+	@echo
+
+require:
 	python3 -m pip install -r requirements.txt
+
+requiredev:
+	python3 -m pip install -r requirements-dev.txt
 
 pkgdev:
-	python3 -m pip install -r requirements-dev.txt
-
-install:
-	python3 -m pip install -r requirements.txt
-	python3 -m pip install .
-	
-installdev:
-	python3 -m pip install -r requirements-dev.txt
-	python3 -m pip install . --verbose
+	python3 -m pip install . --verbose --use-feature=in-tree-build
 
 dist: clean
 	rm -rf dist/*
@@ -31,4 +32,4 @@ dist: clean
 	python setup.py bdist_wheel
 
 dist-upload:
-	twine upload dist/* --verbose
+	twine upload dist/*
